@@ -94,43 +94,52 @@ export const authAPI = {
 // POSTS API
 // ===========================================
 export const postsAPI = {
-  getFeed: (cursor) => api.get('/posts/feed', { params: { cursor } }),
+  getFeed: (params) => api.get('/posts/feed', { params }),
   getPost: (id) => api.get(`/posts/${id}`),
-  getUserPosts: (userId, cursor) => api.get(`/posts/user/${userId}`, { params: { cursor } }),
-  createPost: (data) => api.post('/posts', data),
-  updatePost: (id, data) => api.put(`/posts/${id}`, data),
-  deletePost: (id) => api.delete(`/posts/${id}`)
+  getUserPosts: (userId, params) => api.get(`/posts/user/${userId}`, { params }),
+  create: (data) => api.post('/posts', data),
+  update: (id, data) => api.put(`/posts/${id}`, data),
+  delete: (id) => api.delete(`/posts/${id}`)
+};
+
+// ===========================================
+// USERS API
+// ===========================================
+export const usersAPI = {
+  getProfile: (userId) => api.get(`/users/${userId}`),
+  getUserPosts: (userId, params) => api.get(`/posts/user/${userId}`, { params }),
+  updateProfile: (data) => api.put('/users/profile', data)
 };
 
 // ===========================================
 // COMMENTS API
 // ===========================================
 export const commentsAPI = {
-  getPostComments: (postId, cursor) => api.get(`/comments/${postId}`, { params: { cursor } }),
-  getReplies: (commentId, cursor) => api.get(`/comments/${commentId}/replies`, { params: { cursor } }),
-  createComment: (postId, data) => api.post(`/comments/${postId}`, data),
-  updateComment: (id, data) => api.put(`/comments/${id}`, data),
-  deleteComment: (id) => api.delete(`/comments/${id}`)
+  getByPost: (postId, params) => api.get(`/comments/post/${postId}`, { params }),
+  getReplies: (commentId, params) => api.get(`/comments/${commentId}/replies`, { params }),
+  create: (postId, data) => api.post(`/comments/post/${postId}`, data),
+  update: (id, data) => api.put(`/comments/${id}`, data),
+  delete: (id) => api.delete(`/comments/${id}`)
 };
 
 // ===========================================
 // LIKES API
 // ===========================================
 export const likesAPI = {
-  toggleLike: (postId) => api.post(`/likes/${postId}`),
-  getLikeStatus: (postId) => api.get(`/likes/${postId}/status`),
-  getLikesBatch: (postIds) => api.post('/likes/status-batch', { postIds }),
-  getPostLikers: (postId, cursor) => api.get(`/likes/${postId}/users`, { params: { cursor } })
+  toggle: (postId) => api.post(`/likes/toggle/${postId}`),
+  getStatus: (postId) => api.get(`/likes/${postId}/status`),
+  getBatch: (postIds) => api.post('/likes/status-batch', { postIds }),
+  getUsers: (postId, params) => api.get(`/likes/${postId}/users`, { params })
 };
 
 // ===========================================
 // NOTIFICATIONS API
 // ===========================================
 export const notificationsAPI = {
-  getNotifications: (cursor, unreadOnly) => api.get('/notifications', { params: { cursor, unreadOnly } }),
-  getUnreadCount: () => api.get('/notifications/count'),
+  getAll: (params) => api.get('/notifications', { params }),
+  getUnreadCount: () => api.get('/notifications/unread/count'),
   markAsRead: (notificationIds) => api.put('/notifications/read', { notificationIds }),
-  markAllAsRead: () => api.put('/notifications/read-all')
+  markAllAsRead: () => api.put('/notifications/read/all')
 };
 
 export default api;

@@ -115,9 +115,9 @@ export const usersAPI = {
 // COMMENTS API
 // ===========================================
 export const commentsAPI = {
-  getByPost: (postId, params) => api.get(`/comments/post/${postId}`, { params }),
+  getByPost: (postId, params) => api.get(`/comments/${postId}`, { params }),
   getReplies: (commentId, params) => api.get(`/comments/${commentId}/replies`, { params }),
-  create: (postId, data) => api.post(`/comments/post/${postId}`, data),
+  create: (postId, data) => api.post(`/comments/${postId}`, data),
   update: (id, data) => api.put(`/comments/${id}`, data),
   delete: (id) => api.delete(`/comments/${id}`)
 };
@@ -126,7 +126,7 @@ export const commentsAPI = {
 // LIKES API
 // ===========================================
 export const likesAPI = {
-  toggle: (postId) => api.post(`/likes/toggle/${postId}`),
+  toggle: (postId) => api.post(`/likes/${postId}`),
   getStatus: (postId) => api.get(`/likes/${postId}/status`),
   getBatch: (postIds) => api.post('/likes/status-batch', { postIds }),
   getUsers: (postId, params) => api.get(`/likes/${postId}/users`, { params })
@@ -137,9 +137,9 @@ export const likesAPI = {
 // ===========================================
 export const notificationsAPI = {
   getAll: (params) => api.get('/notifications', { params }),
-  getUnreadCount: () => api.get('/notifications/unread/count'),
+  getUnreadCount: () => api.get('/notifications/count'),
   markAsRead: (notificationIds) => api.put('/notifications/read', { notificationIds }),
-  markAllAsRead: () => api.put('/notifications/read/all')
+  markAllAsRead: () => api.put('/notifications/read-all')
 };
 
 export default api;

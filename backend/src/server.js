@@ -42,7 +42,7 @@ const connectMongoDB = require('./config/mongodb');
 const { connectRedis, getRedisClient } = require('./config/redis');
 
 // Services
-const pubSubService = require('./services/pubsub.service');
+const { PubSubService } = require('./services/pubsub.service');
 
 // Route imports
 const authRoutes = require('./routes/auth.routes');
@@ -340,6 +340,10 @@ const startServer = async () => {
     await connectRedis();
     console.log('✅ Redis connected');
     
+    // Initialize PubSub service (requires separate Redis connections)
+    await PubSubService.initialize();
+    console.log('✅ Pub/Sub initialized');
+    
     /**
      * LEARNING: Connecting Redis Pub/Sub to Socket.IO
      * 
@@ -355,7 +359,7 @@ const startServer = async () => {
      * - If you have 3 servers, any can publish and all subscribe
      * - Socket.IO handles the browser connection
      */
-    await pubSubService.subscribe('notifications', (message) => {
+    await PubSubService.subscribe('notifications', (message) => {
       console.log('Received notification from Redis:', message);
       
       if (message.recipientId) {

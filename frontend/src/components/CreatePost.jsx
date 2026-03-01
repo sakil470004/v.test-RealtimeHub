@@ -33,7 +33,7 @@ export default function CreatePost({ onPostCreated }) {
         onPostCreated({
           ...response.data.data.post,
           author: {
-            _id: user._id,
+            _id: user.id,
             username: user.username,
             avatar: user.avatar
           },

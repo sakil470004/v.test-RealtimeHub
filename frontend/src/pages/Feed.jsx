@@ -42,8 +42,8 @@ export default function Feed() {
         setPosts(data.posts);
       }
       
-      setCursor(data.pagination.nextCursor);
-      setHasMore(data.pagination.hasMore);
+      setCursor(data.nextCursor);
+      setHasMore(data.hasMore);
     } catch (err) {
       setError('Failed to load posts');
       console.error(err);

@@ -37,8 +37,8 @@ export default function CommentSection({ postId }) {
         setComments(data.comments);
       }
       
-      setCursor(data.pagination.nextCursor);
-      setHasMore(data.pagination.hasMore);
+      setCursor(data.nextCursor);
+      setHasMore(data.hasMore);
     } catch (error) {
       console.error('Failed to fetch comments:', error);
     } finally {
@@ -67,7 +67,7 @@ export default function CommentSection({ postId }) {
       const newCommentData = {
         ...response.data.data.comment,
         author: {
-          _id: user._id,
+          _id: user.id,
           username: user.username,
           avatar: user.avatar
         }
@@ -153,7 +153,7 @@ export default function CommentSection({ postId }) {
                 <span className="comment-time">{formatTime(comment.createdAt)}</span>
                 
                 {/* Delete button for comment owner */}
-                {user && user._id === comment.author._id && (
+                {user && user.id === comment.author._id && (
                   <button 
                     className="comment-delete"
                     onClick={() => handleDelete(comment._id)}

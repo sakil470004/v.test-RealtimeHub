@@ -37,8 +37,8 @@ export default function Notifications() {
         setNotifications(data.notifications);
       }
       
-      setCursor(data.pagination.nextCursor);
-      setHasMore(data.pagination.hasMore);
+      setCursor(data.nextCursor);
+      setHasMore(data.hasMore);
     } catch (error) {
       console.error('Failed to fetch notifications:', error);
     } finally {

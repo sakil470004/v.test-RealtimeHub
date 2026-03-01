@@ -9,9 +9,9 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/auth.middleware');
-const User = require('../models/User');
-const Post = require('../models/Post');
-const cacheService = require('../services/cache.service');
+const User = require('../models/User.model');
+const Post = require('../models/Post.model');
+const { CacheService } = require('../services/cache.service');
 
 /**
  * GET /api/v1/users/:userId
@@ -23,7 +23,7 @@ router.get('/:userId', async (req, res, next) => {
     
     // Try cache first
     const cacheKey = `user:${userId}`;
-    const cached = await cacheService.get(cacheKey);
+    const cached = await CacheService.get(cacheKey);
     
     if (cached) {
       return res.status(200).json({
@@ -52,7 +52,7 @@ router.get('/:userId', async (req, res, next) => {
     };
     
     // Cache the result
-    await cacheService.set(cacheKey, userData, 300); // 5 minutes
+    await CacheService.set(cacheKey, userData, 300); // 5 minutes
     
     res.status(200).json({
       success: true,
@@ -83,7 +83,7 @@ router.put('/profile', protect, async (req, res, next) => {
     ).select('-password');
     
     // Invalidate cache
-    await cacheService.delete(`user:${req.user._id}`);
+    await CacheService.delete(`user:${req.user._id}`);
     
     res.status(200).json({
       success: true,

@@ -49,7 +49,7 @@ export default function Navbar() {
               </Link>
               
               {/* Profile Link */}
-              <Link to={`/profile/${user._id}`} className="nav-link">
+              <Link to={`/profile/${user.id}`} className="nav-link">
                 Profile
               </Link>
               

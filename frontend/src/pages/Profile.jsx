@@ -27,7 +27,7 @@ export default function Profile() {
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState('');
   
-  const isOwnProfile = currentUser?._id === userId;
+  const isOwnProfile = currentUser?.id === userId;
   
   /**
    * Fetch user profile
@@ -56,8 +56,8 @@ export default function Profile() {
         setPosts(data.posts);
       }
       
-      setCursor(data.pagination.nextCursor);
-      setHasMore(data.pagination.hasMore);
+      setCursor(data.nextCursor);
+      setHasMore(data.hasMore);
     } catch (err) {
       console.error('Failed to fetch posts:', err);
     }

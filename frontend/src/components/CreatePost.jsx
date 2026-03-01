@@ -37,8 +37,8 @@ export default function CreatePost({ onPostCreated }) {
             username: user.username,
             avatar: user.avatar
           },
-          likesCount: 0,
-          commentsCount: 0
+          likeCount: 0,
+          commentCount: 0
         });
       }
     } catch (error) {

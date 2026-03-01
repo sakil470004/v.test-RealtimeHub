@@ -19,7 +19,7 @@ export default function PostCard({ post, onUpdate }) {
   const { user } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(post.isLikedByCurrentUser || false);
-  const [likeCount, setLikeCount] = useState(post.likesCount || 0);
+  const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [isLiking, setIsLiking] = useState(false);
   
   /**
@@ -42,7 +42,7 @@ export default function PostCard({ post, onUpdate }) {
     setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
     
     try {
-      await likesAPI.toggle(post._id);
+      await likesAPI.toggle(post.id);
     } catch (error) {
       // Revert on error
       setIsLiked(previousIsLiked);
@@ -108,7 +108,7 @@ export default function PostCard({ post, onUpdate }) {
       {/* Post Stats */}
       <div className="post-stats">
         <span>{likeCount} {likeCount === 1 ? 'like' : 'likes'}</span>
-        <span>{post.commentsCount || 0} {post.commentsCount === 1 ? 'comment' : 'comments'}</span>
+        <span>{post.commentCount || 0} {post.commentCount === 1 ? 'comment' : 'comments'}</span>
       </div>
       
       {/* Post Actions */}
@@ -131,7 +131,7 @@ export default function PostCard({ post, onUpdate }) {
       
       {/* Comments Section */}
       {showComments && (
-        <CommentSection postId={post._id} />
+        <CommentSection postId={post.id} />
       )}
     </div>
   );

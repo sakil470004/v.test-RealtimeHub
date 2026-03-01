@@ -346,6 +346,15 @@ async function startWorker() {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✅ MongoDB connected');
     
+    // Initialize Redis services (CacheService uses global Redis connection)
+    const { connectRedis } = require('../config/redis');
+    await connectRedis();
+    console.log('✅ Redis connected');
+    
+    // Initialize PubSub service for real-time notifications
+    await PubSubService.initialize();
+    console.log('✅ PubSub initialized');
+    
     console.log('🚀 Notification worker started');
     console.log(`   Concurrency: ${workerOptions.concurrency}`);
     console.log(`   Listening for jobs...`);
